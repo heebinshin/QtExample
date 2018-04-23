@@ -1,24 +1,20 @@
 import QtQuick 2.10
 
 Rectangle {
-    id: root
+    id: menubutton
     property alias text: label.text
     signal clicked
-
-    width: 40; height: 30
-    color: "lightsteelblue"
-    border.color: Qt.lighter(color)
 
     Text {
         id: label
         anchors.centerIn: parent
-        text: "Start"
+        text: menubutton.text
     }
 
     MouseArea {
-        anchors.fill: parent
+        anchors.fill: menubutton
         onClicked: {
-            root.clicked()
+            menubutton.clicked()
         }
     }
 }
