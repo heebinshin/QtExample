@@ -52,7 +52,8 @@ Row {
         onClicked: {
             canvas.clear()
             console.log("canvas clear")
-            image.source = ""
+            canvas.unloadImage(canvas.imagefile)
+            canvas.imagefile = ""
         }
     }
 }

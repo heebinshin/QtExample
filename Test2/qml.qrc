@@ -5,6 +5,5 @@
         <file>qml/Button.qml</file>
         <file>qml/Mycanvas.qml</file>
         <file>qml/Toolbar.qml</file>
-        <file>saveImage/Image.png</file>
     </qresource>
 </RCC>

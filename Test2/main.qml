@@ -22,7 +22,7 @@ Window {
         folder: "file:///e:/Test/Test2/saveImage"
         onAccepted: {
             fileDialog.folder = fileUrl
-            image.source = fileDialog.fileUrl
+            canvas.imagefile = fileDialog.fileUrl
         }
     }
 
@@ -35,10 +35,6 @@ Window {
     Toolbar {id: toolbar}
     Mycanvas {id: canvas}
 
-    Image {
-        id: image
-        anchors.fill: area
-    }
 
     MouseArea {
         id: area

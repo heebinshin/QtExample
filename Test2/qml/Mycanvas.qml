@@ -5,7 +5,12 @@ import QtQuick.Window 2.10
 Canvas {
     id: canvas
 
-
+    property string imagefile: ""
+    onImagefileChanged: {
+        if(canvas.imagefile.length != 0)
+        loadImage(canvas.imagefile)
+        canvas.requestPaint()
+    }
 
     anchors {
         left: parent.left
@@ -24,14 +29,13 @@ Canvas {
         canvas.requestPaint()
     }
 
-    Image {
-        id: image
-        anchors.fill: canvas
-    }
-
     onPaint: {
 
         var ctx = getContext("2d")
+        if(isImageLoaded(canvas.imagefile)){
+            ctx.drawImage(canvas.imagefile, 0, 0)
+        }
+
         ctx.lineWidth = 1.5
         ctx.strokeStyle = "blue"
         ctx.beginPath()
@@ -41,6 +45,8 @@ Canvas {
         ctx.lineTo(lastX, lastY)
         ctx.stroke()
     }
+
+    onImageLoaded: requestPaint()
 }
 
 
