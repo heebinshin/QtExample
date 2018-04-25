@@ -1,13 +1,30 @@
 import QtQuick 2.10
 import QtQuick.Window 2.10
+import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import Qt.labs.folderlistmodel 2.0
 
 import "qml"
+
 
 Window {
     id: window
     visible: true
     width: 500
     height: 500
+
+    //property var url
+
+    FileDialog {
+        id: fileDialog
+        title: "Choose a image"
+        nameFilters : "*.png , *.jpg , *.gif"
+        folder: "file:///e:/Test/Test2/saveImage"
+        onAccepted: {
+            fileDialog.folder = fileUrl
+            image.source = fileDialog.fileUrl
+        }
+    }
 
     Text {
         id: status

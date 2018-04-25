@@ -1,8 +1,10 @@
 import QtQuick 2.10
 import QtQuick.Window 2.10
 
+
 Canvas {
     id: canvas
+
 
 
     anchors {
@@ -20,6 +22,11 @@ Canvas {
         var ctx = getContext('2d')
         ctx.reset()
         canvas.requestPaint()
+    }
+
+    Image {
+        id: image
+        anchors.fill: canvas
     }
 
     onPaint: {

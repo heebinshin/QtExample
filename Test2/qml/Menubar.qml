@@ -2,8 +2,6 @@ import QtQuick 2.10
 
 Row {
     id: menus
-    property var url
-
 
     Button {
         id: savebutton
@@ -14,7 +12,8 @@ Row {
         onClicked: {
             status.text = "save success!" // save 버튼 기능 수행
             console.log("save image")
-            url = canvas.toDataURL("image/png")
+            //url = canvas.toDataURL("image/png") 방식으로 undo 기능 찾아보기
+            canvas.save("E:/Test/Test2/saveImage/Image.png")
         }
     }
 
@@ -28,7 +27,7 @@ Row {
         onClicked: {
             status.text = "open!" //open 버튼 기능 수행
             console.log("open image")
-            image.source = url
+            fileDialog.open();
         }
     }
 
