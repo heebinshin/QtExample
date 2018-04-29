@@ -1,1 +1,33 @@
 Hello.
+
+최상위 객체는 1개
+Element는 대문자로 시작
+Element id는 소문자로 시작
+동적 property 선언
+	*JS type var = 알수없는 타입
+	*property는 소문자로 시작
+	
+각각의 Element들은 Property와 Method를 포함
+	*C++ : Q_PROPERTY, Q_INVOKABLE 매크로 사용
+	*QML : property, Funtion 키워드 사용(동적 선언)
+
+Custom property signal handler : on<PropertyName>CHanged
+Custom signal handler : on<Signal>
+
+Component.onCompleted: (모든 Element를 불러왔을 때)
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+FILE *fp = NULL;
+
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QByteArray localMsg = msg.toLocal8Bit();
+    switch (type) {
+    case QtDebugMsg:
+        fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function );
+    
+    }
+    fflush(fp);
+}
+////////////////////////////////////////////////////////////////////////////////////////

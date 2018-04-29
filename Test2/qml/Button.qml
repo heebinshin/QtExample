@@ -4,6 +4,7 @@ Rectangle {
     id: menubutton
     property alias text: label.text
     signal clicked
+    signal pressed
 
     Text {
         id: label
@@ -13,8 +14,7 @@ Rectangle {
 
     MouseArea {
         anchors.fill: menubutton
-        onClicked: {
-            menubutton.clicked()
-        }
+        onPressed: menubutton.pressed()
+        onClicked: menubutton.clicked()
     }
 }

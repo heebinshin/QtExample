@@ -10,19 +10,17 @@ import "qml"
 Window {
     id: window
     visible: true
-    width: 500
+    width: 555
     height: 500
-
-    //property var url
 
     FileDialog {
         id: fileDialog
-        title: "Choose a image"
+        title: "Choice a image"
         nameFilters : "*.png , *.jpg , *.gif"
         folder: "file:///e:/Test/Test2/saveImage"
         onAccepted: {
             fileDialog.folder = fileUrl
-            canvas.imagefile = fileDialog.fileUrl
+            canvas.imagefilepath = fileDialog.fileUrl
         }
     }
 
