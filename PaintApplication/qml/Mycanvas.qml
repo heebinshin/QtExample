@@ -9,7 +9,6 @@ Canvas {
     property int savemode: 1
     property int openmode: 2
     property int undoopenmode: 3
-    property int opendelay: 1
     property string imagefilepath: ""
     property string imagefilepathsave: ""
     property var undoimage: []
@@ -17,15 +16,6 @@ Canvas {
     property var url
     property int penmode: 0
     property int undomode: 0
-
-    onUndoimageChanged: {
-        if(imagecount == -1)
-            imagecount++
-        else if(imagecount < undoimage.length)
-            imagecount--
-    }
-
-
 
     onImagefilepathChanged: {
         if(saveopenmode == savemode){
@@ -66,7 +56,6 @@ Canvas {
         imagecount++
         url = toDataURL('image/png')
         undoimage[imagecount] = url
-        print("image log")
     }
 
 

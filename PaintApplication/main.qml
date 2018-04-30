@@ -17,7 +17,7 @@ Window {
         id: fileDialog
         title: "Choice a image"
         nameFilters : "*.png , *.jpg , *.gif"
-        folder: "file:///e:/Test/Test2/saveImage"
+        folder: "file:///e:/Test/PaintApplication/saveImage"
         onAccepted: {
             fileDialog.folder = fileUrl
             canvas.imagefilepath = fileDialog.fileUrl
