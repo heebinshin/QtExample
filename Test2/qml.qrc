@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>qml/Menubar.qml</file>
-        <file>qml/Button.qml</file>
-        <file>qml/Mycanvas.qml</file>
-        <file>qml/Toolbar.qml</file>
-    </qresource>
-</RCC>
