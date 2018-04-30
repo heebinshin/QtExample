@@ -28,10 +28,6 @@ Rectangle {
                 status.text = "save success!" // save 버튼 기능 수행
                 fileDialog.selectExisting = false
                 fileDialog.open()
-
-                //console.log("save image")
-                //url = canvas.toDataURL("image/png") 방식으로 undo 기능 만들어보기              
-                //canvas.save("E:/Test/Test2/saveImage/Image.png")
             }
         }
 
@@ -47,7 +43,6 @@ Rectangle {
 
             onClicked: {
                 status.text = "open!" //open 버튼 기능 수행
-                //console.log("open image")
                 fileDialog.selectExisting = true
                 fileDialog.open();
             }
@@ -72,6 +67,39 @@ Rectangle {
             onClicked: {
                 canvas.clear()
                 console.log("canvas clear")
+                canvas.imagelog()
+            }
+        }
+
+        Button {
+            id: undobutton
+            width: 50; height: 38
+            anchors.left: clearbutton.right
+            text: "undo"
+            onClicked: {
+                console.log("undo")
+                canvas.clear()
+                canvas.imagecount--
+                if(canvas.imagecount == 0)
+                    canvas.imagecount++
+                canvas.saveopenmode = canvas.openmode
+                canvas.imagefilepath = canvas.undoimage[canvas.imagecount]
+            }
+        }
+
+        Button {
+            id: redobutton
+            width: 50; height: 38
+            anchors.left: undobutton.right
+            text: "redo"
+            onClicked: {
+                console.log("redo")
+                canvas.clear()
+                canvas.imagecount++
+                if(canvas.imagecount >= canvas.undoimage.length)
+                            canvas.imagecount--
+                canvas.saveopenmode = canvas.openmode
+                canvas.imagefilepath = canvas.undoimage[canvas.imagecount]
             }
         }
     }

@@ -21,6 +21,7 @@ Window {
         onAccepted: {
             fileDialog.folder = fileUrl
             canvas.imagefilepath = fileDialog.fileUrl
+            canvas.saveopenmode = canvas.undoopenmode
         }
     }
 
@@ -32,19 +33,4 @@ Window {
     Menubar {id: menubar}
     Toolbar {id: toolbar}
     Mycanvas {id: canvas}
-
-
-    MouseArea {
-        id: area
-        visible: false
-
-        anchors.fill: canvas
-        onPressed: {
-            canvas.lastX = mouseX
-            canvas.lastY = mouseY
-        }
-        onPositionChanged: {
-            canvas.requestPaint()
-        }
-    }
 }

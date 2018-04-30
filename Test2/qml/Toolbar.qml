@@ -34,7 +34,7 @@ Rectangle {
 
             onClicked: {
                 status.text = "square" //square 버튼 기능 수행
-                area.visible = false
+                canvas.penmode = 0
             }
         }
 
@@ -55,7 +55,7 @@ Rectangle {
 
             onClicked: {
                 status.text = "circle" //circle 버튼 기능 수행
-                area.visible = false
+                canvas.penmode = 0
             }
         }
 
@@ -87,7 +87,7 @@ Rectangle {
 
             onClicked: {
                 status.text = "triangle" //triangle 버튼 기능 수행
-                area.visible = false
+                canvas.penmode = 0
             }
         }
 
@@ -120,7 +120,7 @@ Rectangle {
 
             onClicked: {
                 status.text = "line" // line 버튼 기능 수행
-                area.visible = false
+                canvas.penmode = 0
             }
         }
 
@@ -141,7 +141,7 @@ Rectangle {
 
             onClicked: {
                 status.text = "roundedsquare" //roundedsquare 버튼 기능 수행
-                area.visible = false
+                canvas.penmode = 0
             }
         }
 
@@ -155,7 +155,7 @@ Rectangle {
 
             onClicked: {
                 status.text = "pen" // line 버튼 기능 수행
-                area.visible = true
+                canvas.penmode = 1
             }
         }
     }
