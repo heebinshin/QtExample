@@ -8,8 +8,24 @@ Canvas {
     property int saveopenmode: 0
     property int savemode: 1
     property int openmode: 2
+    property int undoopenmode: 3
+    property int opendelay: 1
     property string imagefilepath: ""
     property string imagefilepathsave: ""
+    property var undoimage: []
+    property int imagecount: 0
+    property var url
+    property int penmode: 0
+    property int undomode: 0
+
+    onUndoimageChanged: {
+        if(imagecount == -1)
+            imagecount++
+        else if(imagecount < undoimage.length)
+            imagecount--
+    }
+
+
 
     onImagefilepathChanged: {
         if(saveopenmode == savemode){
@@ -22,7 +38,7 @@ Canvas {
 
         else if(saveopenmode == openmode) {
             if(canvas.imagefilepath.length != 0)
-            loadImage(canvas.imagefilepath)
+                loadImage(canvas.imagefilepath)
         }
         canvas.requestPaint()
     }
@@ -46,26 +62,65 @@ Canvas {
         canvas.requestPaint()
     }
 
+    function imagelog() {
+        imagecount++
+        url = toDataURL('image/png')
+        undoimage[imagecount] = url
+        print("image log")
+    }
+
+
     onPaint: {
         var ctx = getContext("2d")
         if(isImageLoaded(canvas.imagefilepath)){
             ctx.reset()
             ctx.drawImage(canvas.imagefilepath, 0, 0)
             unloadImage(canvas.imagefilepath)
+            if(saveopenmode === undoopenmode)
+            {
+                imagelog()
+            }
+            saveopenmode = 0
         }
+        if(imagecount == 0)
+            imagelog()
 
-        ctx.lineWidth = 1.5
-        ctx.strokeStyle = "green"
-        ctx.beginPath()
-        ctx.moveTo(lastX, lastY)
-        lastX = area.mouseX
-        lastY = area.mouseY
-        ctx.lineTo(lastX, lastY)
-        ctx.stroke()
+        if(penmode == 1)
+        {
+            area.visible = true
+            ctx.lineWidth = 1
+            ctx.strokeStyle = "green"
+            ctx.beginPath()
+            ctx.moveTo(lastX, lastY)
+            lastX = area.mouseX
+            lastY = area.mouseY
+            ctx.lineTo(lastX, lastY)
+            ctx.stroke()
+        }
+    }
+
+    MouseArea {
+        id: area
+
+        anchors.fill: canvas
+        onPressed: {
+            canvas.lastX = mouseX
+            canvas.lastY = mouseY
+        }
+        onClicked: imagelog()
+
+        onPositionChanged: {
+            canvas.requestPaint()
+        }
     }
 
     onImageLoaded: requestPaint()
+
+
+
 }
+
+
 
 
 
