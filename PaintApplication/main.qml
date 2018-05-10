@@ -19,18 +19,16 @@ Window {
         nameFilters : "*.png , *.jpg , *.gif"
         folder: "file:///e:/Test/PaintApplication/saveImage"
         onAccepted: {
-            fileDialog.folder = fileUrl
-            canvas.imagefilepath = fileDialog.fileUrl
-            canvas.saveopenmode = canvas.undoopenmode
+            canvas.imagefilePath = fileUrl
         }
     }
 
     Text {
-        id: status
-        anchors.top: canvas.top
+        id: status  // 어떤 버튼 눌려있는지 상태 표시용 텍스트
+        anchors.top: canvas.top // 영역 윗부분의 기준을 윈도우 윗부분으로 설정
     }
 
-    Menubar {id: menubar}
-    Toolbar {id: toolbar}
-    Mycanvas {id: canvas}
+    Menubar{id: menubar}   //메뉴바 컴포넌트 호출 Toolbar 기준을 위해 id: menubar로 설정
+    Toolbar{id: toolbar}   //툴바 컴포넌트 호출 Mycanvas 기준을 위해 id: toolbar로 설정
+    Mycanvas{id: canvas}   //캠버스 컴포넌트 호출 status텍스트 기준을 위해 id: canvas로 설정
 }

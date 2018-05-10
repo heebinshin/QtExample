@@ -31,10 +31,15 @@ Rectangle {
                 color:  "steelblue"
                 border.color: "#4a50c3"
             }
-
+            onPressed: square.color = "lightblue"
             onClicked: {
+                circle.color = "white"
+                triangle.color = "white"
+                line.color = "white"
+                roundedsquare.color = "white"
+                pen.color = "white"
                 status.text = "square" //square 버튼 기능 수행
-                canvas.penmode = 0
+                canvas.toolMode = canvas.squareMode
             }
         }
 
@@ -52,10 +57,15 @@ Rectangle {
                 border.color: "#4a50c3"
                 radius: 14
             }
-
+            onPressed: circle.color = "lightblue"
             onClicked: {
+                square.color = "white"
+                triangle.color = "white"
+                line.color = "white"
+                roundedsquare.color = "white"
+                pen.color = "white"
                 status.text = "circle" //circle 버튼 기능 수행
-                canvas.penmode = 0
+                canvas.toolMode = canvas.circleMode
             }
         }
 
@@ -84,10 +94,15 @@ Rectangle {
                     ctx.stroke()
                 }
             }
-
+            onPressed: triangle.color = "lightblue"
             onClicked: {
+                square.color = "white"
+                circle.color = "white"
+                line.color = "white"
+                roundedsquare.color = "white"
+                pen.color = "white"
                 status.text = "triangle" //triangle 버튼 기능 수행
-                canvas.penmode = 0
+                canvas.toolMode = canvas.triangleMode
             }
         }
 
@@ -98,7 +113,7 @@ Rectangle {
             anchors.left: triangle.right
             anchors.leftMargin: 8
             Canvas {
-                id: lineCanvas
+                id: lineShape
                 anchors.centerIn: line
                 width: 30; height: 30
                 onPaint: {
@@ -115,12 +130,16 @@ Rectangle {
                     ctx.fill()
                     ctx.stroke()
                 }
-
             }
-
+            onPressed: line.color = "lightblue"
             onClicked: {
+                square.color = "white"
+                circle.color = "white"
+                triangle.color = "white"
+                roundedsquare.color = "white"
+                pen.color = "white"
                 status.text = "line" // line 버튼 기능 수행
-                canvas.penmode = 0
+                canvas.toolMode = canvas.lineMode
             }
         }
 
@@ -138,10 +157,15 @@ Rectangle {
                 border.color: "#4a50c3"
                 radius: 5
             }
-
+            onPressed: roundedsquare.color = "lightblue"
             onClicked: {
+                square.color = "white"
+                circle.color = "white"
+                triangle.color = "white"
+                line.color = "white"
+                pen.color = "white"
                 status.text = "roundedsquare" //roundedsquare 버튼 기능 수행
-                canvas.penmode = 0
+                canvas.toolMode = canvas.roundedsquareMode
             }
         }
 
@@ -152,10 +176,15 @@ Rectangle {
             anchors.left: roundedsquare.right
             anchors.leftMargin: 8
             text: "pen"
-
+            onPressed: pen.color = "lightblue"
             onClicked: {
+                square.color = "white"
+                circle.color = "white"
+                triangle.color = "white"
+                line.color = "white"
+                roundedsquare.color = "white"
                 status.text = "pen" // line 버튼 기능 수행
-                canvas.penmode = 1
+                canvas.toolMode = canvas.penMode
             }
         }
     }
