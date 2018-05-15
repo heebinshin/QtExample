@@ -5,14 +5,9 @@
 
 PaintExam::PaintExam(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
-    mPix = QPixmap(400, 400);
-    mPix.fill(Qt::white);
-
-    mousePressed = false;
-    drawStarted = false;
-
-    ToolMode = 4;
 }
+
+//////////////////////////////////////////////////////////////////////////// name, color
 
 QString PaintExam::name() const
 {
@@ -31,127 +26,125 @@ QColor PaintExam::color() const
 
 void PaintExam::setColor(const QColor &color)
 {
-    m_color = color;
+    if (color != m_color) {
+        m_color = color;
+        update();   // repaint with the new color
+        emit colorChanged();
+    }
 }
+
+//////////////////////////////////////////////////////////////////////////// width, height
+
+int PaintExam::width() const
+{
+    return m_width;
+}
+
+void PaintExam::setWidth(const int &width)
+{
+    if(width != m_width) {
+        m_width = width;
+        update();
+        emit widthChanged();
+    }
+}
+
+int PaintExam::height() const
+{
+    return m_height;
+}
+
+void PaintExam::setHeight(const int &height)
+{
+    if(height != m_height) {
+        m_height = height;
+        update();
+        emit heightChanged();
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////// x,y
+
+double PaintExam::x() const
+{
+    return m_pressX;
+}
+
+void PaintExam::setX(const double &x)
+{
+    m_pressX = x;
+}
+
+double PaintExam::y() const
+{
+    return m_pressY;
+}
+
+void PaintExam::setY(const double &y)
+{
+    m_pressY = y;
+}
+
+//////////////////////////////////////////////////////////////////////////// toolmode
+
+int PaintExam::toolmode() const
+{
+    return m_ToolMode;
+}
+
+void PaintExam::setToolmode(const int &ToolMode)
+{
+    if(ToolMode != m_ToolMode) {
+        m_ToolMode = ToolMode;
+        update();
+        emit toolmodeChanged();
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////// paint
 
 void PaintExam::paint(QPainter *painter)
 {
     QPen pen(m_color, 1);
     painter->setPen(pen);
 
-    painter->drawEllipse(0,0,100,100);
-
+    switch (m_ToolMode) {
+    case 1:
+        painter->drawRect(m_pressX, m_pressY, m_width, m_height);
+        break;
+    case 2:
+        painter->drawEllipse(m_pressX, m_pressY, m_width, m_height);
+        break;
+    case 3:
+        painter->drawLine(m_pressX, m_height + m_pressY, m_pressX + (m_width)/2, m_pressY);
+        painter->drawLine(m_pressX + (m_width)/2, m_pressY, m_pressX + m_width, m_pressY + m_height);
+        painter->drawLine(m_pressX, m_height + m_pressY, m_pressX + m_width, m_pressY + m_height);
+        break;
+    case 4:
+        painter->drawLine(m_pressX, m_pressY, m_width + m_pressX, m_height + m_pressY);
+        break;
+    case 5:
+        painter->drawRoundedRect(m_pressX, m_pressY, m_width, m_height,30, 30);
+        break;
+    case 6:
+        painter->drawPoint(m_pressX, m_pressY);
+        break;
+    default:
+        break;
+    }
 }
 
 void PaintExam::Tool_Mode(const int &text)
 {
-    ToolMode = text;
-    qDebug() << ToolMode;
+    m_ToolMode = text;
+    qDebug() << m_ToolMode;
 }
+
+//////////////////////////////////////////////////////////////////////////// clear
 
 void PaintExam::cleardraw()
 {
-
     setColor(QColor(Qt::transparent));  //clear
     update();
-
-    emit drawCleared();
 }
-
-//////////////////////////////////////////////////////////// mouse
-
-void PaintExam::test()
-{
-    qDebug() << "Hello from C++";
-}
-
-void PaintExam::mousePress(double x, double y)
-{
-    QPoint m_press(x,y);
-    qDebug() << "press : " << m_press;
-}
-
-void PaintExam::mouseRelease(double x, double y)
-{
-    QPoint m_release(x,y);
-    qDebug() << "release : " << m_release;
-}
-
-
-
-//////////////////////////////////////////////////////////// paint
-
-void PaintExam::on_btnLine_clicked()
-{
-    ToolMode = 4;
-}
-
-void PaintExam::on_btnRect_clicked()
-{
-    ToolMode = 1;
-}
-
-
-void PaintExam::mousePressEvent(QMouseEvent *event)
-{
-    mousePressed = true;
-
-    if(ToolMode == 1){
-        mRect.setTopLeft(event->pos());
-        mRect.setBottomRight(event->pos());
-    }
-    else if(ToolMode == 4){
-        mLine.setP1(event->pos());
-        mLine.setP2(event->pos());
-    }
-}
-
-void PaintExam::mouseMoveEvent(QMouseEvent *event)
-{
-    if(event->type() == QEvent::MouseMove){
-        if(ToolMode == 1){
-            mRect.setBottomRight(event->pos());
-        }
-        else if(ToolMode == 4)
-            mLine.setP2(event->pos());
-    }
-    update();
-}
-
-void PaintExam::mouseReleaseEvent(QMouseEvent *event)
-{
-    mousePressed = false;
-    update();
-}
-
-void PaintExam::paintEvent(QPaintEvent *event)
-{
-    if(mousePressed){
-        painter.drawPixmap(0, 0, mPix);
-        if(ToolMode == 1){
-            painter.drawRect(mRect);
-        }
-        else if(ToolMode == 4){
-            painter.drawLine(mLine);
-        }
-
-        drawStarted = true;
-    }
-
-    else if(drawStarted){
-        QPainter tempPainter(&mPix);
-        if(ToolMode == 1){
-            tempPainter.drawRect(mRect);
-        }
-        else if(ToolMode == 4){
-            tempPainter.drawLine(mLine);
-        }
-
-        painter.drawPixmap(0, 0, mPix);
-    }
-
-    painter.end();
-}
-
-
 

@@ -29,16 +29,25 @@ Canvas {        //툴바 아래로 캔버스 기준 설정
 
     PaintExam {
         id: aRectangle
-        visible: true
         anchors.fill: parent
-        width: parent.width
-        height: parent.height
-        color: "red"
+    }
+
+    function clearDraw(){
+        aRectangle.cleardraw()
+    }
+    function changecolor_blue(){
+        aRectangle.color = "blue"
+    }
+    function changecolor_red(){
+        aRectangle.color = ""
+    }
+    function selectTool() {
+        aRectangle.toolmode = toolMode;
     }
 
     onPaint: {
-        mouse.mousePress(pressX, pressY)
-        mouse.mouseRelease(lastX, lastY)
+        //mouse.mousePress(pressX, pressY)
+        //mouse.mouseRelease(lastX, lastY)
     }
 
     MouseArea {
@@ -47,15 +56,18 @@ Canvas {        //툴바 아래로 캔버스 기준 설정
         onPressed: {
             pressX = mouseX
             pressY = mouseY
+            aRectangle.x = pressX
+            aRectangle.y = pressY
+
         }
         onClicked: {
             requestPaint()
             lastX = mouseX
             lastY = mouseY
-
+            aRectangle.width = lastX - pressX
+            aRectangle.height = lastY - pressY
         }
         onPositionChanged: {
-
         }
     }
     onImageLoaded: requestPaint()

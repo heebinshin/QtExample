@@ -45,7 +45,7 @@ Rectangle {
             width: 50; height: 38
             anchors.left: exitbutton.right
             text: "clear"
-            onClicked: console.log("canvas clear")
+            onClicked: {console.log("canvas clear"); canvas.clearDraw()}
         }
 
         Menubutton {
