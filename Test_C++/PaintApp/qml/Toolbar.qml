@@ -45,8 +45,7 @@ Rectangle {
                 status.text = "square" //square 버튼 기능 수행
                 canvas.toolMode = canvas.squareMode
                 parent.clearButtonColor()
-                canvas.changecolor_red()
-                canvas.selectTool()
+                canvas.toolmodeChange()
             }
         }
 
@@ -70,8 +69,7 @@ Rectangle {
                 status.text = "circle" //circle 버튼 기능 수행
                 canvas.toolMode = canvas.circleMode
                 parent.clearButtonColor()
-                canvas.changecolor_blue()
-                canvas.selectTool()
+                canvas.toolmodeChange()
             }
         }
 
@@ -105,7 +103,7 @@ Rectangle {
                 status.text = "triangle" //triangle 버튼 기능 수행
                 canvas.toolMode = canvas.triangleMode
                 parent.clearButtonColor()
-                canvas.selectTool()
+                canvas.toolmodeChange()
             }
         }
 
@@ -139,7 +137,7 @@ Rectangle {
                 status.text = "line" // line 버튼 기능 수행
                 canvas.toolMode = canvas.lineMode
                 parent.clearButtonColor()
-                canvas.selectTool()
+                canvas.toolmodeChange()
             }
         }
 
@@ -162,7 +160,7 @@ Rectangle {
                 status.text = "roundedsquare" //roundedsquare 버튼 기능 수행
                 canvas.toolMode = canvas.roundedsquareMode
                 parent.clearButtonColor()
-                canvas.selectTool()
+                canvas.toolmodeChange()
             }
         }
 
@@ -178,7 +176,7 @@ Rectangle {
                 status.text = "pen" // line 버튼 기능 수행
                 canvas.toolMode = canvas.penMode
                 parent.clearButtonColor()
-                canvas.selectTool()
+                canvas.toolmodeChange()
             }
         }
     }

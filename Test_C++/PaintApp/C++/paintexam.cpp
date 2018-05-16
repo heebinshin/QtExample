@@ -7,18 +7,7 @@ PaintExam::PaintExam(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
 }
 
-//////////////////////////////////////////////////////////////////////////// name, color
-
-QString PaintExam::name() const
-{
-    return m_name;
-}
-
-void PaintExam::setName(const QString &name)
-{
-    m_name = name;
-}
-
+//////////////////////////////////////////////////////////////////////////// color
 QColor PaintExam::color() const
 {
     return m_color;
@@ -28,123 +17,90 @@ void PaintExam::setColor(const QColor &color)
 {
     if (color != m_color) {
         m_color = color;
-        update();   // repaint with the new color
-        emit colorChanged();
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////// width, height
-
-int PaintExam::width() const
-{
-    return m_width;
-}
-
-void PaintExam::setWidth(const int &width)
-{
-    if(width != m_width) {
-        m_width = width;
         update();
-        emit widthChanged();
     }
 }
 
-int PaintExam::height() const
-{
-    return m_height;
-}
-
-void PaintExam::setHeight(const int &height)
-{
-    if(height != m_height) {
-        m_height = height;
-        update();
-        emit heightChanged();
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////// x,y
-
-double PaintExam::x() const
-{
-    return m_pressX;
-}
-
-void PaintExam::setX(const double &x)
-{
-    m_pressX = x;
-}
-
-double PaintExam::y() const
-{
-    return m_pressY;
-}
-
-void PaintExam::setY(const double &y)
-{
-    m_pressY = y;
-}
-
-//////////////////////////////////////////////////////////////////////////// toolmode
-
-int PaintExam::toolmode() const
-{
-    return m_ToolMode;
-}
-
-void PaintExam::setToolmode(const int &ToolMode)
-{
-    if(ToolMode != m_ToolMode) {
-        m_ToolMode = ToolMode;
-        update();
-        emit toolmodeChanged();
-    }
-}
 
 //////////////////////////////////////////////////////////////////////////// paint
 
 void PaintExam::paint(QPainter *painter)
 {
-    QPen pen(m_color, 1);
-    painter->setPen(pen);
+    QPen pen_r(m_color, 2);
 
-    switch (m_ToolMode) {
+    QRect rectangle_(m_startPoint, m_endPoint);
+    painter->setPen(pen_r);
+
+    switch (m_toolMode) {
     case 1:
-        painter->drawRect(m_pressX, m_pressY, m_width, m_height);
+        painter->drawRect(rectangle_);
         break;
     case 2:
-        painter->drawEllipse(m_pressX, m_pressY, m_width, m_height);
+        painter->drawEllipse(rectangle_);
         break;
     case 3:
-        painter->drawLine(m_pressX, m_height + m_pressY, m_pressX + (m_width)/2, m_pressY);
-        painter->drawLine(m_pressX + (m_width)/2, m_pressY, m_pressX + m_width, m_pressY + m_height);
-        painter->drawLine(m_pressX, m_height + m_pressY, m_pressX + m_width, m_pressY + m_height);
+        painter->drawLine(m_startPoint, m_movePoint);
+        painter->drawLine(m_movePoint, m_endPoint);
+        painter->drawLine(m_endPoint, m_startPoint);
         break;
     case 4:
-        painter->drawLine(m_pressX, m_pressY, m_width + m_pressX, m_height + m_pressY);
+        painter->drawLine(m_startPoint, m_endPoint);
         break;
     case 5:
-        painter->drawRoundedRect(m_pressX, m_pressY, m_width, m_height,30, 30);
-        break;
-    case 6:
-        painter->drawPoint(m_pressX, m_pressY);
-        break;
+        painter->drawRoundedRect(rectangle_, m_radius, m_radius);
     default:
         break;
     }
 }
 
-void PaintExam::Tool_Mode(const int &text)
+//////////////////////////////////////////////////////////////////////////// point for draw
+
+void PaintExam::startPoint(const double &x, const double &y)
 {
-    m_ToolMode = text;
-    qDebug() << m_ToolMode;
+    QPoint setPoint(x,y);
+    m_startPoint = setPoint;
 }
 
-//////////////////////////////////////////////////////////////////////////// clear
-
-void PaintExam::cleardraw()
+void PaintExam::movePoint(const double &x, const double &y)
 {
-    setColor(QColor(Qt::transparent));  //clear
+    QPoint setPoint(x,y);
+    m_movePoint = setPoint;
+}
+
+void PaintExam::movingPoint(const double &x, const double &y)
+{
+    QPoint setPoint(x,y);
+    m_endPoint = setPoint;
+    m_color = "pink";
     update();
 }
 
+void PaintExam::endPoint(const double &x, const double &y)
+{
+    QPoint setPoint(x,y);
+    m_endPoint = setPoint;
+    m_color = "black";
+    update();
+}
+
+//////////////////////////////////////////////////////////////////////////// rounded-Square radius
+
+void PaintExam::radiusEdit(const int &radius)
+{
+    m_radius = radius;
+}
+
+//////////////////////////////////////////////////////////////////////////// toolmode
+
+int PaintExam::toolMode() const
+{
+    return m_toolMode;
+}
+
+void PaintExam::setToolMode(const int &toolMode)
+{
+    if(toolMode != m_toolMode) {
+        m_toolMode = toolMode;
+        update();
+    }
+}

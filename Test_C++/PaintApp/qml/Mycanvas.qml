@@ -18,62 +18,64 @@ Canvas {        //툴바 아래로 캔버스 기준 설정
     property int roundedsquareMode: 5
     property int penMode: 6
 
-    property int menuMode: 0        //메뉴 모드를 위한 변수
-    property int saveMode: 1
-    property int openMode: 2
-
-    property real pressX
-    property real pressY
     property real lastX
     property real lastY
+    property int clickCount : 0
+
+    function toolmodeChange(){
+        aRectangle.toolMode = toolMode
+    }
 
     PaintExam {
         id: aRectangle
         anchors.fill: parent
     }
 
-    function clearDraw(){
-        aRectangle.cleardraw()
-    }
-    function changecolor_blue(){
-        aRectangle.color = "blue"
-    }
-    function changecolor_red(){
-        aRectangle.color = ""
-    }
-    function selectTool() {
-        aRectangle.toolmode = toolMode;
-    }
-
-    onPaint: {
-        //mouse.mousePress(pressX, pressY)
-        //mouse.mouseRelease(lastX, lastY)
+    TextEdit {
+        id: radius
+        x: lastX + 20; y: lastY - 20
+        visible: false
+        focus: true
+        text: "10"
+        font.family: "Kristen ITC"
+        font.bold: true
+        font.pointSize: 10
     }
 
     MouseArea {
         id: area
         anchors.fill: parent
-        onPressed: {
-            pressX = mouseX
-            pressY = mouseY
-            aRectangle.x = pressX
-            aRectangle.y = pressY
 
-        }
         onClicked: {
-            requestPaint()
             lastX = mouseX
             lastY = mouseY
-            aRectangle.width = lastX - pressX
-            aRectangle.height = lastY - pressY
+
+            if(toolMode) {
+                clickCount++
+
+                if(clickCount === 1){
+                    aRectangle.startPoint(lastX, lastY)
+                    aRectangle.movePoint(lastX, lastY)
+
+                    if(toolMode !== triangleMode) clickCount++
+                    if(toolMode === roundedsquareMode) radius.visible = true
+                }
+
+                else if(clickCount === 2) aRectangle.movePoint(lastX, lastY)
+
+                else if(clickCount === 3) {
+                    aRectangle.endPoint(lastX, lastY)
+                    clickCount = 0
+                    radius.visible = false
+                }
+            }
         }
+
+        hoverEnabled: true
         onPositionChanged: {
+            if(clickCount === 1 || clickCount === 2)    aRectangle.movingPoint(mouseX, mouseY)
+            if(toolMode === roundedsquareMode)          aRectangle.radiusEdit(radius.text)
+            else                                        radius.visible = false
         }
     }
-    onImageLoaded: requestPaint()
 }
-
-
-
-
-
